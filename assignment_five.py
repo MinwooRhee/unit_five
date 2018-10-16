@@ -1,45 +1,59 @@
+# Minwoo Rhee
+# 10/16/18
+# assignment_five
+# a game of guessing a random number from 1 to 100
 
 import random
 
 
-def generate_pile():
-    pile_number = random.randint(1, 10)
-    return pile_number
-
-
-def pick_pile():
-    which_pile = float(input("Which pile?(1 or 2): "))
-    while which_pile != 1 and which_pile != 2:
-        print("The value you entered is not valid. Please try again.")
-        which_pile = float(input("Which pile?(1 or 2): "))
-    return which_pile
-
-
-def how_many_stones():
-    stones = float(input("How many stones?(1~3): "))
-    while stones != 1 and stones != 2 and stones != 3:
-        print("The value you entered is not valid. Please try again.")
-        stones = float(input("How many stones?(1~3): "))
-    return stones
+def instruction():
+    """
+    give instructions of the program
+    :return: None
+    """
+    print("Welcome to the game of guessing!")
+    print("Computer will pick a random number between 1 - 100 and you are going to guess the number.")
+    print("With every guess, Computer will tell you if the guess was too high or too low.")
 
 
 def game():
-    pile_1 = generate_pile()
-    pile_2 = generate_pile()
+    """
+    game is all in this function
+    :return: None
+    """
+    number = random.randint(1, 100)
+    how_many_guesses = 0  # add 1 to this variable every time player guesses
 
-    print("Pile 1: ", pile_1)
-    print("Pile 2: ", pile_2)
+    while True:
+        guess = int(input("Pick a number between 1 and 100: "))
+        if guess > 100 or guess < 1:
+            print("Please enter a valid number.")
+        elif guess > number:
+            print("Your guess is too high.")
+            how_many_guesses = how_many_guesses + 1
+        elif guess < number:
+            print("Your guess is too low.")
+            how_many_guesses = how_many_guesses + 1
+        else:
+            how_many_guesses = how_many_guesses + 1
+            print("Congratulations! You got it in", how_many_guesses, "guesses.")
+            break
 
-    which_pile = pick_pile()
-    stones = how_many_stones()
-    if which_pile == 1:
-        pile_1 = pile_1 - stones
-    else:
-        pile_2 = pile_2 - stones
 
-    if pile_1 + pile_2 == 0:
-        
+def main():
+    instruction()
 
-    print("Pile 1: ", pile_1)
-    print("Pile 2: ", pile_2)
+    while True:
+        print(" ")  # blank line to increase readability
+        y_or_n = input("Would you like to guess my number?(y/n) ")
 
+        if y_or_n == "y":
+            game()
+        elif y_or_n == "n":
+            print("Good bye!")
+            break
+        else:
+            print("Please enter a valid answer.")
+
+
+main()
